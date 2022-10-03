@@ -1,12 +1,22 @@
 import { useEffect, useState } from "react";
 import liff from "@line/liff";
 import "./App.css";
+import React from "react";
+import ReactDOM from "react-dom";
 
 function App() {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  // liff.ready
+  // liff.getOS()
+  // liff.getLanguage()
+  // liff.getVersion()
+  // liff.getLineVersion()
+  // liff.isInClient()
+  // liff.closeWindow()
 
   useEffect(() => {
+    
     liff
       .init({
         liffId: import.meta.env.VITE_LIFF_ID
@@ -18,11 +28,16 @@ function App() {
         setMessage("LIFF init failed.");
         setError(`${e}`);
       });
+    if (liff.isLoggedIn()) {
+        liff.logout();
+        window.location.reload();
+    } 
   });
+ 
 
-  return (
+  return ( 
     <div className="App">
-      <h1>create-liff-app</h1>
+      <h1>Demo Gitec Liff App</h1>
       {message && <p>{message}</p>}
       {error && (
         <p>
@@ -36,7 +51,9 @@ function App() {
       >
         LIFF Documentation
       </a>
+      
     </div>
+    
   );
 }
 
